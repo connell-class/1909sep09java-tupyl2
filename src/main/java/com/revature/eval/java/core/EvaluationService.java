@@ -15,7 +15,7 @@ public class EvaluationService {
 	 */
 	public String reverse(String string) {
 		char[] reversed = new char[string.length()];
-		for (int i = reversed.length - 1, j=0; i >= 0; i--, j++) {
+		for (int i = reversed.length - 1, j = 0; i >= 0; i--, j++) {
 			reversed[j] = string.charAt(i);
 		}
 		return new String(reversed);
@@ -29,9 +29,20 @@ public class EvaluationService {
 	 * @param phrase
 	 * @return
 	 */
+	// TODO Write an implementation for this method declaration
 	public String acronym(String phrase) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		char c = phrase.charAt(0);
+		String acronym1 = c + "";
+
+		for (int i = 0; i <= phrase.length() - 1; i++) {
+
+			if (phrase.charAt(i) == '-' | phrase.charAt(i) == ' ') {
+				acronym1 += phrase.charAt(i + 1);
+			}
+
+		}
+		return acronym1;
+
 	}
 
 	/**
@@ -85,19 +96,31 @@ public class EvaluationService {
 
 		public boolean isEquilateral() {
 			// TODO Write an implementation for this method declaration
-			return false;
+			if (sideOne == sideTwo & sideTwo == sideThree) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 
 		public boolean isIsosceles() {
 			// TODO Write an implementation for this method declaration
-			return false;
+			if (sideOne == sideTwo || sideTwo == sideThree || sideThree == sideOne) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 
 		public boolean isScalene() {
 			// TODO Write an implementation for this method declaration
-			return false;
-		}
+			if (sideOne != sideTwo & sideOne != sideThree & sideTwo != sideThree) {
+				return true;
+			} else {
+				return false;
 
+			}
+		}
 	}
 
 	/**
@@ -117,7 +140,37 @@ public class EvaluationService {
 	 */
 	public int getScrabbleScore(String string) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+
+		int score = 0;
+		char letter = 'A';
+
+		for (int i = 0; i < string.length(); i++) {
+			letter = string.toUpperCase().charAt(i);
+			if (letter == 'A' | letter == 'E' | letter == 'I' | letter == 'O' | letter == 'U' | letter == 'L'
+					| letter == 'N' | letter == 'R' | letter == 'S' | letter == 'T') {
+				score++;
+			}
+			if (letter == 'D' | letter == 'G') {
+				score += 2;
+			}
+			if (letter == 'C' | letter == 'M' | letter == 'P') {
+				score += 3;
+			}
+			if (letter == 'F' | letter == 'H' | letter == 'V' | letter == 'W' | letter == 'Y') {
+				score += 4;
+			}
+			if (letter == 'K') {
+				score += 5;
+			}
+			if (letter == 'J' | letter == 'X') {
+				score += 8;
+			}
+			if (letter == 'Q' | letter == 'Z') {
+				score += 10;
+			}
+		}
+		return score;
+
 	}
 
 	/**
@@ -153,7 +206,26 @@ public class EvaluationService {
 	 */
 	public String cleanPhoneNumber(String string) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		
+		String string1 = "";
+
+		for (int i = 0; i < string.length(); i++) {
+			if (string.charAt(i) == '1') {
+				i++;
+			}
+
+			if (string.charAt(i) == '-' | string.charAt(i) == ' ' | string.charAt(i) == '(' | string.charAt(i) == ')'
+					| string.charAt(i) == '.') {
+
+			}
+
+			else {
+				string1 += string.charAt(i);
+			}
+		}
+	
+		return string1;
+
 	}
 
 	/**
@@ -167,6 +239,7 @@ public class EvaluationService {
 	 */
 	public Map<String, Integer> wordCount(String string) {
 		// TODO Write an implementation for this method declaration
+
 		return null;
 	}
 
@@ -538,7 +611,9 @@ public class EvaluationService {
 	 */
 	public int solveWordProblem(String string) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		String s = "What is 5 plus 13?";
+		int x = Integer.parseInt(s);
+		return x;
 	}
 
 }

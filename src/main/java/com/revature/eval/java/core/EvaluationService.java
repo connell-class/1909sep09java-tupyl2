@@ -1,6 +1,7 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -206,27 +207,41 @@ public class EvaluationService {
 	 */
 	public String cleanPhoneNumber(String string) {
 		// TODO Write an implementation for this method declaration
+		string = "1-234-567-5677";
+//		String string1 = "";
+		String string1 = string.replaceAll(" ","").replaceAll(".", "").replaceAll("_", "").replaceAll("-", "");
 		
-		String string1 = "";
+		if (string1.length() > 11) {
+						throw new IllegalArgumentException("Invalid number.");	
+		
+		} else {
+				for (int i = 0; i < string.length(); i++) {
 
-		for (int i = 0; i < string.length(); i++) {
-			if (string.charAt(i) == '1') {
-				i++;
-			}
+					if (string.charAt(0) == '1') {
+						continue;
+					}
 
-			if (string.charAt(i) == '-' | string.charAt(i) == ' ' | string.charAt(i) == '(' | string.charAt(i) == ')'
-					| string.charAt(i) == '.') {
+//					if (string.charAt(i) == '-' | string.charAt(i) == ' ' | string.charAt(i) == '('
+//						| string.charAt(i) == ')' | string.charAt(i) == '.') {
+//						continue;
+//					}
 
-			}
-
-			else {
-				string1 += string.charAt(i);
+					else {
+						string1 += string.charAt(i);
+					}}		
+			if (!string1.matches("[0-9]")) {
+				throw new IllegalArgumentException("Invalid character");
+			
+			} else {
+					
+			 return string1; 
 			}
 		}
-	
-		return string1;
-
 	}
+	
+
+
+
 
 	/**
 	 * 6. Given a phrase, count the occurrences of each word in that phrase.
@@ -239,8 +254,21 @@ public class EvaluationService {
 	 */
 	public Map<String, Integer> wordCount(String string) {
 		// TODO Write an implementation for this method declaration
+		
+		String[] splitString = string.split(" ");
 
-		return null;
+		Map<String, Integer> wordCount1 = new HashMap<>();
+
+		for (int i = 0; i < splitString.length; i++) {
+
+			if (wordCount1.containsKey(splitString[i])) {
+				wordCount1.put(splitString[i], wordCount1.get(splitString[i]) + 1);
+			} else {
+				wordCount1.put(splitString[i], 1);
+		}
+		}
+		
+		return wordCount1;
 	}
 
 	/**
@@ -355,6 +383,7 @@ public class EvaluationService {
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
 		// TODO Write an implementation for this method declaration
+
 		return null;
 	}
 
@@ -616,4 +645,5 @@ public class EvaluationService {
 		return x;
 	}
 
+	
 }

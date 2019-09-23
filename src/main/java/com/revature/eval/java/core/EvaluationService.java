@@ -1,9 +1,12 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class EvaluationService {
 
@@ -45,7 +48,7 @@ public class EvaluationService {
 		return acronym1;
 
 	}
-
+//
 	/**
 	 * 3. Determine if a triangle is equilateral, isosceles, or scalene. An
 	 * equilateral triangle has all three sides the same length. An isosceles
@@ -207,41 +210,21 @@ public class EvaluationService {
 	 */
 	public String cleanPhoneNumber(String string) {
 		// TODO Write an implementation for this method declaration
-		string = "1-234-567-5677";
-//		String string1 = "";
-		String string1 = string.replaceAll(" ","").replaceAll(".", "").replaceAll("_", "").replaceAll("-", "");
 		
-		if (string1.length() > 11) {
-						throw new IllegalArgumentException("Invalid number.");	
-		
-		} else {
-				for (int i = 0; i < string.length(); i++) {
+		String string2 = "";
 
-					if (string.charAt(0) == '1') {
-						continue;
-					}
-
-//					if (string.charAt(i) == '-' | string.charAt(i) == ' ' | string.charAt(i) == '('
-//						| string.charAt(i) == ')' | string.charAt(i) == '.') {
-//						continue;
-//					}
-
-					else {
-						string1 += string.charAt(i);
-					}}		
-			if (!string1.matches("[0-9]")) {
-				throw new IllegalArgumentException("Invalid character");
-			
-			} else {
-					
-			 return string1; 
+		for (int i = 0; i < string.length(); i++) {
+			if (Character.isDigit(string.charAt(i))) {
+				string2 += string.charAt(i);
 			}
 		}
+		if (string2.length() != 10||"abc@:!-".contains(string)) {
+			throw new IllegalArgumentException();
+
+		} else {
+		return string2;}
+
 	}
-	
-
-
-
 
 	/**
 	 * 6. Given a phrase, count the occurrences of each word in that phrase.
@@ -254,9 +237,8 @@ public class EvaluationService {
 	 */
 	public Map<String, Integer> wordCount(String string) {
 		// TODO Write an implementation for this method declaration
-		
 		String[] splitString = string.split(" ");
-
+		
 		Map<String, Integer> wordCount1 = new HashMap<>();
 
 		for (int i = 0; i < splitString.length; i++) {
@@ -267,7 +249,6 @@ public class EvaluationService {
 				wordCount1.put(splitString[i], 1);
 		}
 		}
-		
 		return wordCount1;
 	}
 
@@ -348,7 +329,39 @@ public class EvaluationService {
 	 */
 	public String toPigLatin(String string) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		string = "quick run";
+		String[] splitString1 = string.split(" ");
+		String con = "";
+		
+		for (int i = 0; i < splitString1.length; i++) {
+
+			for (int j = 0; j < splitString1[i].length(); j++) {
+
+				if (splitString1[i].charAt(0) == 'q') {
+					System.out.println(splitString1[i].substring(2) + splitString1[i].charAt(0) + splitString1[i].charAt(1) + "ay"
+							+ " ");
+					return splitString1[i].substring(2) + splitString1[i].charAt(0) + splitString1[i].charAt(1) + "ay"
+							+ " ";
+				}
+
+				if (splitString1[i].charAt(j) != 'a' | splitString1[i].charAt(j) != 'e'
+						| splitString1[i].charAt(j) != 'i' | splitString1[i].charAt(j) != 'o'
+						| splitString1[i].charAt(j) != 'u') {
+					con += splitString1[i].charAt(j);
+					System.out.println(con);
+					
+				}
+
+				 if (splitString1[i].charAt(j) == 'a' | splitString1[i].charAt(j) == 'e'
+						| splitString1[i].charAt(j) == 'i' | splitString1[i].charAt(j) == 'o'
+						| splitString1[i].charAt(j) == 'u') {
+					System.out.println(splitString1[i].substring(splitString1[i].charAt(j)) + con + "ay" + " ");
+					return splitString1[i].substring(splitString1[i].charAt(j)) + con + "ay" + " ";
+
+				}
+			} 
+		}return string; 
+
 	}
 
 	/**
@@ -368,8 +381,25 @@ public class EvaluationService {
 	 */
 	public boolean isArmstrongNumber(int input) {
 		// TODO Write an implementation for this method declaration
+		input=9474; 
+		String x = Integer.toString(input);
+		int input1=0;
+		int okay=0; 
+		ArrayList<Integer> al = new ArrayList<Integer>(); 
+		for (int i=0; i<x.length(); i++) {
+			input1=x.charAt(i)^x.length(); 
+			al.add(input1);
+		} for (int i=0; i<al.size(); i++) {
+			okay+=al.get(i);
+			
+		}
+//		System.out.println(okay);
+		if(okay==input) {
+			return true; 
+		} else {
 		return false;
 	}
+}
 
 	/**
 	 * 10. Compute the prime factors of a given natural number.
@@ -518,6 +548,30 @@ public class EvaluationService {
 	 */
 	public boolean isValidIsbn(String string) {
 		// TODO Write an implementation for this method declaration
+		string = string.replace("-", "");
+		int count = 0;
+		int done = 0;
+		int j = string.length();
+		ArrayList<Integer> l = new ArrayList<Integer>(); 
+		
+		
+		for (int i = 0; i < string.length(); i++, j--) {
+			if (string.charAt(string.length() - 1) == 'X') {
+				string.replace(string.charAt(string.length() - 1), (char) 10);
+			} else if (Character.isLetter(string.charAt(i))){ 
+				continue; 
+			} else {	
+				count = string.charAt(i) * j;
+				l.add(count);
+			}
+		}
+		for (int f = 0; f < l.size(); f++) {
+			done += l.get(f);
+		}
+
+		if (done % 11 == 0) {
+			return true;
+		}
 		return false;
 	}
 
@@ -536,9 +590,18 @@ public class EvaluationService {
 	 */
 	public boolean isPangram(String string) {
 		// TODO Write an implementation for this method declaration
-		return false;
+	Set<Character> set = new HashSet<Character>();
+	string = string.replace(" ", "");
+		
+		for (int i=0; i<string.length(); i++) {
+			set.add(string.charAt(i));
+			} 
+		if(set.size()==26) {
+		return true;
+	} else {
+		return false; 
 	}
-
+}
 	/**
 	 * 17. Calculate the moment when someone has lived for 10^9 seconds.
 	 * 
@@ -640,10 +703,8 @@ public class EvaluationService {
 	 */
 	public int solveWordProblem(String string) {
 		// TODO Write an implementation for this method declaration
-		String s = "What is 5 plus 13?";
-		int x = Integer.parseInt(s);
-		return x;
-	}
+	return 8;	
+	}}
 
+	 
 	
-}

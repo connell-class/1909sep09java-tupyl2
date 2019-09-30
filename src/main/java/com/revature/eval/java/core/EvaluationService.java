@@ -758,8 +758,8 @@ public class EvaluationService {
 	 */
 	public int solveWordProblem(String string) {
         // TODO Write an implementation for this method declaration
-        String numeric="0123456789";
-        int[] problem=new int[2];
+        String number="0123456789";
+        int[] wordProblem=new int[2];
         String digit="";
         int index=0;
         boolean negative=false;
@@ -768,31 +768,31 @@ public class EvaluationService {
             if (current.equals("-")) {
                 negative=true;
             }
-            if (numeric.contains(current)) {
+            if (number.contains(current)) {
                 digit+=current;
                 String next=""+string.charAt(i+1);
-                if (!numeric.contains(next)) {
+                if (!number.contains(next)) {
                     int finished=Integer.parseInt(digit);
                     if (negative) {
                         finished*=-1;
                     }
-                    problem[index]=finished;
+                    wordProblem[index]=finished;
                     index++;
                     negative=false;
                     digit="";
                 }
             }
         }
-        int a=problem[0];
-        int b=problem[1];
+        int x=wordProblem[0];
+        int y=wordProblem[1];
         if (string.contains("plus"))
-            return a+b;
+            return x+y;
         else if (string.contains("minus"))
-            return a-b;
+            return x-y;
         else if (string.contains("multiplied"))
-            return a*b;
+            return x*y;
         else if (string.contains("divided"))
-            return a/b;
+            return x/y;
         else
             return 0;
     }

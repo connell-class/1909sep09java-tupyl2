@@ -2,6 +2,7 @@ package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -308,6 +309,7 @@ public class EvaluationService {
 			this.sortedList = sortedList;
 		}
 
+		
 	}
 
 	/**
@@ -329,41 +331,45 @@ public class EvaluationService {
 	 */
 	public String toPigLatin(String string) {
 		// TODO Write an implementation for this method declaration
-		string = "quick run";
-		String[] splitString1 = string.split(" ");
-		String con = "";
-		
-		for (int i = 0; i < splitString1.length; i++) {
-
-			for (int j = 0; j < splitString1[i].length(); j++) {
-
-				if (splitString1[i].charAt(0) == 'q') {
-					System.out.println(splitString1[i].substring(2) + splitString1[i].charAt(0) + splitString1[i].charAt(1) + "ay"
-							+ " ");
-					return splitString1[i].substring(2) + splitString1[i].charAt(0) + splitString1[i].charAt(1) + "ay"
-							+ " ";
-				}
-
-				if (splitString1[i].charAt(j) != 'a' | splitString1[i].charAt(j) != 'e'
-						| splitString1[i].charAt(j) != 'i' | splitString1[i].charAt(j) != 'o'
-						| splitString1[i].charAt(j) != 'u') {
-					con += splitString1[i].charAt(j);
-					System.out.println(con);
-					
-				}
-
-				 if (splitString1[i].charAt(j) == 'a' | splitString1[i].charAt(j) == 'e'
-						| splitString1[i].charAt(j) == 'i' | splitString1[i].charAt(j) == 'o'
-						| splitString1[i].charAt(j) == 'u') {
-					System.out.println(splitString1[i].substring(splitString1[i].charAt(j)) + con + "ay" + " ");
-					return splitString1[i].substring(splitString1[i].charAt(j)) + con + "ay" + " ";
-
-				}
-			} 
-		}return string; 
-
+		 string.toLowerCase();
+	        char vowel[] = {'a', 'e', 'i', 'o', 'u'};
+	        StringBuilder lang = new StringBuilder();
+	        StringBuilder letter = new StringBuilder();
+	        StringBuilder end = new StringBuilder();
+	        String word = null;
+	        String[] words = {};
+	        words = string.split(" ");
+	      
+	        for(int a = 0; a < words.length; a++) {
+	            lang.delete(0,  lang.length());
+	            letter.delete(0, letter.length());
+	            for(int i = 0; i < words[a].length(); i++) {
+	                word = "" + words[a].charAt(i);
+	                
+	                if(Arrays.toString(vowel).contains(word)) {
+	                    lang.append(words[a], i, words[a].length());
+	                    break;
+	                }else {
+	                    letter.append(word);
+	                    if(words[a].contains("qu")) {
+	                        letter.append("u");
+	                        i++;
+	                    }
+	                }   
+	            
+	            }
+	            lang.append(letter.toString() + "ay");
+	            
+	            end.append(lang.toString());
+	            if(words.length > 1 && a != (words.length -1)) {
+	                end.append(" ");
+	            }
+	        }
+	        
+	        
+	        System.out.println(end.toString());
+	        return end.toString();
 	}
-
 	/**
 	 * 9. An Armstrong number is a number that is the sum of its own digits each
 	 * raised to the power of the number of digits.
@@ -381,25 +387,25 @@ public class EvaluationService {
 	 */
 	public boolean isArmstrongNumber(int input) {
 		// TODO Write an implementation for this method declaration
-		input=9474; 
-		String x = Integer.toString(input);
-		int input1=0;
-		int okay=0; 
-		ArrayList<Integer> al = new ArrayList<Integer>(); 
-		for (int i=0; i<x.length(); i++) {
-			input1=x.charAt(i)^x.length(); 
-			al.add(input1);
-		} for (int i=0; i<al.size(); i++) {
-			okay+=al.get(i);
+		
+			String s=String.valueOf(input);
+			int armstrongCheck=0;
+			int shifter=input;
+			int[] digits=new int[s.length()];
+			for (int i=0; i<s.length(); i++) {
+				digits[i]=(shifter%10);
+				shifter/=10;
+			}
 			
+			for (int i=0; i<digits.length; i++) 
+				armstrongCheck+=(Math.pow(digits[i], digits.length));
+			if (armstrongCheck==input)
+				return true;
+			else
+				return false;
 		}
-//		System.out.println(okay);
-		if(okay==input) {
-			return true; 
-		} else {
-		return false;
-	}
-}
+		
+	
 
 	/**
 	 * 10. Compute the prime factors of a given natural number.
@@ -413,8 +419,17 @@ public class EvaluationService {
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
 		// TODO Write an implementation for this method declaration
+		List<Long> list = new ArrayList<Long>();
+		long primeNumber = l;
+		for (int i = 2; i <= primeNumber; i++) {
+			if (primeNumber % i == 0) {
 
-		return null;
+				list.add((long) i);
+				primeNumber = primeNumber / i;
+				i = i - 1;
+			}
+		}
+		return list;
 	}
 
 	/**
@@ -445,17 +460,38 @@ public class EvaluationService {
 	 */
 	static class RotationalCipher {
 		private int key;
-
 		public RotationalCipher(int key) {
 			super();
 			this.key = key;
 		}
-
 		public String rotate(String string) {
 			// TODO Write an implementation for this method declaration
-			return null;
+			char[] rotated = new char[string.length()];
+			String alpha = "abcdefghijklmnopqrstuvwxyz";
+			String alphaCaps = alpha.toUpperCase();
+			for (int i = 0; i < string.length(); i++) {
+				String current = "" + string.charAt(i);
+				if (alpha.contains(current)) {
+					int alphaNum = alpha.indexOf(current);
+					if (alphaNum + this.key <= 25) {
+						rotated[i] = alpha.charAt(alphaNum + this.key);
+					} else {
+						int overageNum = (alphaNum + this.key) - 26;
+						rotated[i] = alpha.charAt(overageNum);
+					}
+				} else if (alphaCaps.contains(current)) {
+					int alphaNum = alphaCaps.indexOf(current);
+					if (alphaNum + this.key <= 25) {
+						rotated[i] = alphaCaps.charAt(alphaNum + this.key);
+					} else {
+						int overageNum = (alphaNum + this.key) - 26;
+						rotated[i] = alphaCaps.charAt(overageNum);
+					}
+				} else
+					rotated[i] = string.charAt(i);
+			}
+			return new String(rotated);
 		}
-
 	}
 
 	/**
@@ -470,9 +506,28 @@ public class EvaluationService {
 	 * @param i
 	 * @return
 	 */
-	public int calculateNthPrime(int i) {
+	public int calculateNthPrime(int i) throws IllegalArgumentException{
 		// TODO Write an implementation for this method declaration
-		return 0;
+		if (i<1)
+			throw new IllegalArgumentException();
+		else {
+			int prime=0;
+			for(int checker=2; ; checker++) {				
+				boolean factorable=false;
+				for(int possFactor=1; possFactor<=checker/2; possFactor++) {	
+					if ((checker%possFactor==0)&(possFactor!=1)) {
+						factorable=true;			
+					}
+				}
+				if (!factorable) {
+					prime++;
+					if (prime==i) {
+						return checker;
+					}
+				}
+					
+			}
+		}
 	}
 
 	/**
@@ -702,9 +757,44 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int solveWordProblem(String string) {
-		// TODO Write an implementation for this method declaration
-	return 8;	
-	}}
+        // TODO Write an implementation for this method declaration
+        String numeric="0123456789";
+        int[] problem=new int[2];
+        String digit="";
+        int index=0;
+        boolean negative=false;
+        for(int i=0; i<string.length(); i++) {
+            String current=""+string.charAt(i);
+            if (current.equals("-")) {
+                negative=true;
+            }
+            if (numeric.contains(current)) {
+                digit+=current;
+                String next=""+string.charAt(i+1);
+                if (!numeric.contains(next)) {
+                    int finished=Integer.parseInt(digit);
+                    if (negative) {
+                        finished*=-1;
+                    }
+                    problem[index]=finished;
+                    index++;
+                    negative=false;
+                    digit="";
+                }
+            }
+        }
+        int a=problem[0];
+        int b=problem[1];
+        if (string.contains("plus"))
+            return a+b;
+        else if (string.contains("minus"))
+            return a-b;
+        else if (string.contains("multiplied"))
+            return a*b;
+        else if (string.contains("divided"))
+            return a/b;
+        else
+            return 0;
+    }
+}
 
-	 
-	
